@@ -1,0 +1,11 @@
+household <- read.csv("household_power_consumption.txt",sep=';',na.strings="?")
+household$Date <- as.Date(household$Date,format="%d/%m/%Y")
+household1<-subset(household,Date=="2007-02-01"|Date=="2007-02-02")
+datetime<-as.POSIXct(paste(household1$Date,household1$Time),format="%Y-%m-%d %H:%M:%S")
+
+png(filename="plot3.png")
+plot(datetime,household1$Sub_metering_1,type="l",xlab="",ylab="Energy sub metering")
+lines(datetime,household1$Sub_metering_2,col="red")
+lines(datetime,household1$Sub_metering_3,col="blue")
+legend("topright",c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),cex=.7,lty=c(1,1,1),col=c("black","red","blue"))
+dev.off()
